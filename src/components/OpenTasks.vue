@@ -1,7 +1,8 @@
 <template>
   <div>
-    <input type="checkbox" id="taskItem" :value='task.desc' @click="task.category = 'closed'">
-    <label for="taskItem">{{task.desc}}</label>
+    <input type="checkbox" :value='task.desc' @click="task.category = 'closed'">
+    <label @dblclick="editTask = true" v-if="!editTask">{{task.desc}}</label>
+    <input type="text" v-model="task.desc" v-if="editTask" @change="editTask=false">
     <a @click='showOptions = showOptions ? false : true'>^</a>
     <options
     :notes='task.notes'
@@ -20,7 +21,8 @@ export default{
   name: 'OpenTasks',
   data () {
     return {
-      showOptions: false
+      showOptions: false,
+      editTask: false
     }
   },
   props: {
