@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="checkbox" id="taskItem" :value='task.desc'>
+    <input type="checkbox" id="taskItem" :value='task.desc' @click="task.category = 'closed'">
     <label for="taskItem">{{task.desc}}</label>
     <a @click='showOptions = showOptions ? false : true'>^</a>
     <options
