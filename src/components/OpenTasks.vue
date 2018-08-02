@@ -9,6 +9,10 @@
     :dueDate='task.dueDate'
     :priority='task.priority'
     v-if="showOptions"
+
+    @update-notes="updateNotes"
+    @update-due="updateDue"
+    @update-priority="updatePriority"
     />
     <button>Delete</button>
   </div>
@@ -30,6 +34,17 @@ export default{
   },
   components: {
     'options': Options
+  },
+  methods: {
+    updateNotes (newNotes) {
+      this.task.notes = newNotes
+    },
+    updateDue (newDue) {
+      this.task.dueDate = newDue
+    },
+    updatePriority (newPrior) {
+      this.task.priority = newPrior
+    }
   }
 }
 </script>
