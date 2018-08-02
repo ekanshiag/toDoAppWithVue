@@ -1,14 +1,14 @@
 <template>
   <div>
-  <input type="checkbox" value="task.desc">
-  <p>{{task.desc}}</p>
-  <Options/>
+    {{task.desc}}
   </div>
 </template>
 
 <script>
 export default{
   name: 'OpenTasks',
-  props: ['task']
+  props: {
+    task: Object
+  }
 }
 </script>

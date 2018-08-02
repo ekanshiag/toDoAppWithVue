@@ -1,16 +1,47 @@
 <template>
   <div id="app">
-    <TaskLists/>
+    <open-tasks
+    v-for="task in allTasks"
+    :task="task"
+    :key="allTasks.indexOf(task)"
+
+    v-if="task.category === 'open'"/>
+    <div class="newTaskItem">
+      <input type="text" placeholder="+    New Task" @keyup.enter="addTask">
+    </div>
+    <closed-tasks
+    v-for="task in allTasks"
+    :task="task"
+    :key="allTasks.indexOf(task)"
+
+    v-if="task.category === 'closed'"
+    />
+
   </div>
 </template>
 
 <script>
-import TaskLists from './components/TaskLists.vue'
+import OpenTasks from './components/OpenTasks'
+import ClosedTasks from './components/ClosedTasks'
+
+var allTasks = [{'desc': 'fhsdjfjks', 'category': 'open'}, {'desc': 'fhsdkjfhsl', 'category': 'closed'}]
 
 export default {
   name: 'App',
+  data () {
+    return {
+      allTasks
+    }
+  },
   components: {
-    TaskLists
+    'open-tasks': OpenTasks,
+    'closed-tasks': ClosedTasks
+  },
+  methods: {
+    addTask (event) {
+      this.allTasks.push({'desc': event.target.value, 'category': 'open'})
+      event.target.value = ''
+    }
   }
 }
 </script>
