@@ -38,12 +38,15 @@ export default{
   methods: {
     updateNotes (newNotes) {
       this.task.notes = newNotes
+      this.$emit('update-storage')
     },
     updateDue (newDue) {
       this.task.dueDate = newDue
+      this.$emit('update-storage')
     },
     updatePriority (newPrior) {
       this.task.priority = newPrior
+      this.$emit('update-storage')
     }
   }
 }

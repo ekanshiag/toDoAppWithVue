@@ -5,7 +5,9 @@
     :task="task"
     :key="allTasks.indexOf(task)"
 
-    v-if="task.category === 'open'"/>
+    v-if="task.category === 'open'"
+    @update-storage="updateStorage"
+    />
     <div class="newTaskItem">
       <input type="text" placeholder="+    New Task" @keyup.enter="addTask">
     </div>
@@ -24,7 +26,10 @@
 import OpenTasks from './components/OpenTasks'
 import ClosedTasks from './components/ClosedTasks'
 
-var allTasks = [{'desc': 'fhsdjfjks', 'category': 'open', 'notes': ' ', 'dueDate': ' ', 'priority': ' '}, {'desc': 'fhsdkjfhsl', 'category': 'closed', 'notes': ' ', 'dueDate': ' ', 'priority': ' '}]
+var allTasks = []
+if (localStorage.getItem('tasks') !== null) {
+  allTasks = JSON.parse(localStorage.getItem('tasks'))
+}
 
 export default {
   name: 'App',
@@ -40,7 +45,11 @@ export default {
   methods: {
     addTask (event) {
       this.allTasks.push({'desc': event.target.value, 'category': 'open'})
+      this.updateStorage()
       event.target.value = ''
+    },
+    updateStorage () {
+      localStorage.setItem('tasks', JSON.stringify(allTasks))
     }
   }
 }
