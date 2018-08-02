@@ -24,7 +24,7 @@
 import OpenTasks from './components/OpenTasks'
 import ClosedTasks from './components/ClosedTasks'
 
-var allTasks = [{'desc': 'fhsdjfjks', 'category': 'open'}, {'desc': 'fhsdkjfhsl', 'category': 'closed'}]
+var allTasks = [{'desc': 'fhsdjfjks', 'category': 'open', 'notes': ' ', 'dueDate': ' ', 'priority': ' '}, {'desc': 'fhsdkjfhsl', 'category': 'closed', 'notes': ' ', 'dueDate': ' ', 'priority': ' '}]
 
 export default {
   name: 'App',
