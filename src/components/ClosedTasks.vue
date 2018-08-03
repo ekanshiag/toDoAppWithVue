@@ -2,7 +2,8 @@
   <div class="done">
     <input type="checkbox" id="taskItem" :value='task.desc' @click="updateTaskCategory" checked>
     <label id="taskDesc" for="taskItem">{{task.desc}}</label>
-    <a @click='showOptions = showOptions ? false : true'>^</a>
+    <button @click='showOptions = showOptions ? false : true'>^</button>
+    <button id="delete" @click="deleteTask">X</button>
     <options
     :notes='task.notes'
     :dueDate='task.dueDate'
@@ -10,7 +11,6 @@
     :editable='false'
     v-if="showOptions"
     />
-    <button @click="deleteTask">Delete</button>
   </div>
 </template>
 
@@ -44,5 +44,15 @@ export default{
 <style>
   .done #taskDesc {
     text-decoration: line-through;
+  }
+  .done > input, .done > label {
+    padding: 15px;
+  }
+  .done button {
+    padding: 0;
+    float: right;
+  }
+  .done #delete {
+  	color: red;
   }
 </style>

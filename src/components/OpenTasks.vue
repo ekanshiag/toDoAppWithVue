@@ -1,9 +1,10 @@
 <template>
-  <div id="taskItem">
+  <div class="taskItem">
     <input type="checkbox" :value='task.desc' @click="updateTaskCategory">
     <label @dblclick="editTask = true" v-if="!editTask">{{task.desc}}</label>
     <input type="text" v-model="task.desc" v-if="editTask" @change="editTask=false">
-    <a @click='showOptions = showOptions ? false : true'>^</a>
+    <button @click='showOptions = showOptions ? false : true'>^</button>
+    <button id="delete" @click="deleteTask">X</button>
     <options
     :notes='task.notes'
     :dueDate='task.dueDate'
@@ -15,7 +16,6 @@
     @update-due="updateDue"
     @update-priority="updatePriority"
     />
-    <button @click="deleteTask">Delete</button>
   </div>
 </template>
 
@@ -61,11 +61,14 @@ export default{
 </script>
 
 <style>
-  #taskItem {
-    margin: 1em;
-  }
-
-  input, label {
+  .taskItem > input, .taskItem > label {
     padding: 15px;
+  }
+  .taskItem button {
+    padding: 0;
+    float: right;
+  }
+  .taskItem #delete {
+  	color: red;
   }
 </style>

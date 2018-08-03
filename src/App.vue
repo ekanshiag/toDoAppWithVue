@@ -2,6 +2,7 @@
   <div id="app">
     <h1>My tasks</h1>
     <open-tasks
+    class = 'myTasks'
     v-for="task in allTasks"
     :task="task"
     :key="allTasks.indexOf(task)"
@@ -11,10 +12,11 @@
     @delete-task="deleteTask"
     />
     <div class="newTaskItem">
-      <input type="text" placeholder="+    New Task" @keyup.enter="addTask">
+      <input type="text" placeholder="+    New Task" @keyup.enter="addTask" id="newTask">
     </div>
     <h1>Done</h1>
     <closed-tasks
+    class = 'completedTasks'
     v-for="task in allTasks"
     :task="task"
     :key="allTasks.indexOf(task)"
@@ -70,8 +72,30 @@ export default {
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  background-color:  #eff2f6;
+}
+
+#app h1 {
   text-align: center;
-  margin-top: 60px;
-  background-color:  #eff2f6
+  padding-top: 1em;
+}
+
+#newTask {
+  margin-top: 2em;
+  width: 98%;
+  height: 2em;
+  color: #ffffff;
+  background-color: #2e3d52;
+  border: 3px solid #ced7e3;
+  border-radius: 1em;
+}
+
+.myTasks, .completedTasks {
+  border: 3px solid #adbdd1;
+  border-radius: 1em;
+  background-color: #dee5ed;
+  box-sizing: content-box;
+  margin: 0.5em;
+  padding: 1em;
 }
 </style>
