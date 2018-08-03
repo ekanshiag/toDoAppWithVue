@@ -46,7 +46,12 @@ export default {
   },
   methods: {
     addTask (event) {
-      this.allTasks.unshift({'desc': event.target.value, 'category': 'open'})
+      let newTask = event.target.value.trim()
+      if (!/\w+/.test(newTask)) {
+        alert('Invalid task')
+        return
+      }
+      this.allTasks.unshift({'desc': newTask, 'category': 'open'})
       this.updateStorage()
       event.target.value = ''
     },
