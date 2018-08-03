@@ -9,7 +9,7 @@
     :priority='task.priority'
     v-if="showOptions"
     />
-    <button>Delete</button>
+    <button @click="deleteTask">Delete</button>
   </div>
 </template>
 
@@ -27,6 +27,11 @@ export default{
   },
   components: {
     'options': Options
+  },
+  methods: {
+    deleteTask () {
+      this.$emit('delete-task', this.task)
+    }
   }
 }
 </script>

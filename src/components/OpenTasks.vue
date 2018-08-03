@@ -14,7 +14,7 @@
     @update-due="updateDue"
     @update-priority="updatePriority"
     />
-    <button>Delete</button>
+    <button @click="deleteTask">Delete</button>
   </div>
 </template>
 
@@ -47,6 +47,9 @@ export default{
     updatePriority (newPrior) {
       this.task.priority = newPrior
       this.$emit('update-storage')
+    },
+    deleteTask () {
+      this.$emit('delete-task', this.task)
     }
   }
 }

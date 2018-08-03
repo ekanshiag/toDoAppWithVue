@@ -7,6 +7,7 @@
 
     v-if="task.category === 'open'"
     @update-storage="updateStorage"
+    @delete-task="deleteTask"
     />
     <div class="newTaskItem">
       <input type="text" placeholder="+    New Task" @keyup.enter="addTask">
@@ -17,6 +18,7 @@
     :key="allTasks.indexOf(task)"
 
     v-if="task.category === 'closed'"
+    @delete-task="deleteTask"
     />
 
   </div>
@@ -49,7 +51,11 @@ export default {
       event.target.value = ''
     },
     updateStorage () {
-      localStorage.setItem('tasks', JSON.stringify(allTasks))
+      localStorage.setItem('tasks', JSON.stringify(this.allTasks))
+    },
+    deleteTask (taskToRemove) {
+      this.allTasks = this.allTasks.filter(x => { return x !== taskToRemove })
+      this.updateStorage()
     }
   }
 }
