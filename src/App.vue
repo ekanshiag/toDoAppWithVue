@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1>My tasks</h1>
     <open-tasks
     v-for="task in allTasks"
     :task="task"
@@ -12,6 +13,7 @@
     <div class="newTaskItem">
       <input type="text" placeholder="+    New Task" @keyup.enter="addTask">
     </div>
+    <h1>Done</h1>
     <closed-tasks
     v-for="task in allTasks"
     :task="task"
@@ -20,7 +22,6 @@
     v-if="task.category === 'closed'"
     @delete-task="deleteTask"
     />
-
   </div>
 </template>
 
@@ -69,10 +70,8 @@ export default {
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
+  background-color:  #eff2f6
 }
 </style>

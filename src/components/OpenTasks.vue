@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <input type="checkbox" :value='task.desc' @click="task.category = 'closed'">
+  <div id="taskItem">
+    <input type="checkbox" :value='task.desc' @click="updateTaskCategory">
     <label @dblclick="editTask = true" v-if="!editTask">{{task.desc}}</label>
     <input type="text" v-model="task.desc" v-if="editTask" @change="editTask=false">
     <a @click='showOptions = showOptions ? false : true'>^</a>
@@ -8,6 +8,7 @@
     :notes='task.notes'
     :dueDate='task.dueDate'
     :priority='task.priority'
+    :editable='true'
     v-if="showOptions"
 
     @update-notes="updateNotes"
@@ -36,6 +37,10 @@ export default{
     'options': Options
   },
   methods: {
+    updateTaskCategory () {
+      this.task.category = 'closed'
+      this.$emit('update-storage')
+    },
     updateNotes (newNotes) {
       this.task.notes = newNotes
       this.$emit('update-storage')
@@ -54,3 +59,13 @@ export default{
   }
 }
 </script>
+
+<style>
+  #taskItem {
+    margin: 1em;
+  }
+
+  input, label {
+    padding: 15px;
+  }
+</style>
