@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     addTask (event) {
-      this.allTasks.push({'desc': event.target.value, 'category': 'open'})
+      this.allTasks.unshift({'desc': event.target.value, 'category': 'open'})
       this.updateStorage()
       event.target.value = ''
     },
