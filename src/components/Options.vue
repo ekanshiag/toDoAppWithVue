@@ -5,23 +5,23 @@
     id="taskNote"
     v-model='notes'
     @change="$emit('update-notes', $event.target.value)"
-    disabled = '!editable'
+    :disabled = '!editable'
     ></textarea>
     <label for="taskDueDate">Due Date</label>
     <input
     type="Date"
     id="taskDueDate"
     :value='dueDate'
-    @change="$emit('update-due', $event.target.value)
-    disabled = '!editable'
-    ">
+    @change="$emit('update-due', $event.target.value)"
+    :disabled = '!editable'
+    >
     <label for="taskPriority">Priority</label>
     <select
     id="taskPriority"
     :value='priority'
-    @change="$emit('update-priority', $event.target.value)
-    disabled = '!editable'
-    ">
+    @change="$emit('update-priority', $event.target.value)"
+    :disabled = '!editable'
+    >
       <option>Low</option>
       <option>Medium</option>
       <option>High</option>
