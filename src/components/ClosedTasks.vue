@@ -2,7 +2,7 @@
   <div class="done">
     <input type="checkbox" id="taskItem" :value='task.desc' @click="updateTaskCategory" checked>
     <label id="taskDesc" for="taskItem">{{task.desc}}</label>
-    <button @click='showOptions = showOptions ? false : true'>^</button>
+    <button @click='showOptions = !showOptions'>^</button>
     <button id="delete" @click="deleteTask">X</button>
     <options
     :notes='task.notes'
@@ -53,6 +53,6 @@ export default{
     float: right;
   }
   .done #delete {
-  	color: red;
+    color: red;
   }
 </style>

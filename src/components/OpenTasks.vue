@@ -69,6 +69,6 @@ export default{
     float: right;
   }
   .taskItem #delete {
-  	color: red;
+    color: red;
   }
 </style>

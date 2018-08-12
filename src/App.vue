@@ -85,7 +85,7 @@ export default {
   width: 98%;
   height: 2em;
   color: #ffffff;
-  background-color: #2e3d52;
+  background-color: #5c7ba3;
   border: 3px solid #ced7e3;
   border-radius: 1em;
 }
