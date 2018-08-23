@@ -2,25 +2,29 @@
   <div class="taskItem">
     <input type="checkbox" :value='task.desc' @click="updateTaskCategory">
     <label @dblclick="editTask = true" v-if="!editTask">{{task.desc}}</label>
-    <input type="text" v-model="task.desc" v-if="editTask" @change="editTask=false">
-    <button @click='showOptions = showOptions ? false : true'>^</button>
+    <input type="text" :value="task.desc" v-if="editTask" @change="updateTaskDesc($event.target.value)">
     <button id="delete" @click="deleteTask">X</button>
+    <button @click='showOptions = !showOptions'>^</button>
     <options
+    :id='task.id'
     :notes='task.notes'
     :dueDate='task.dueDate'
     :priority='task.priority'
     :editable='true'
     v-if="showOptions"
 
-    @update-notes="updateNotes"
-    @update-due="updateDue"
-    @update-priority="updatePriority"
+    @update-options="updateOptions"
     />
+    <label
+    id="dueDate"
+    v-else
+    >{{date}}</label>
   </div>
 </template>
 
 <script>
 import Options from './Options.vue'
+import moment from 'moment'
 
 export default{
   name: 'OpenTasks',
@@ -28,6 +32,12 @@ export default{
     return {
       showOptions: false,
       editTask: false
+    }
+  },
+  computed: {
+    date: function () {
+      let date = moment(this.task.dueDate).format('dddd, MMMM Do YYYY')
+      return date !== 'Invalid date' ? date : ''
     }
   },
   props: {
@@ -38,23 +48,53 @@ export default{
   },
   methods: {
     updateTaskCategory () {
-      this.task.category = 'closed'
-      this.$emit('update-storage')
+      let data = {
+        'category': 'Closed'
+      }
+
+      let myInit = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }
+
+      fetch('http://localhost:3000/tasks/patch/' + this.task.id, myInit)
+        .then(response => {
+          this.$emit('update-tasks')
+        })
     },
-    updateNotes (newNotes) {
-      this.task.notes = newNotes
-      this.$emit('update-storage')
-    },
-    updateDue (newDue) {
-      this.task.dueDate = newDue
-      this.$emit('update-storage')
-    },
-    updatePriority (newPrior) {
-      this.task.priority = newPrior
-      this.$emit('update-storage')
+    updateTaskDesc (newTask) {
+      let data = {
+        'desc': newTask
+      }
+      let myInit = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }
+
+      fetch('http://localhost:3000/tasks/patch/' + this.task.id, myInit)
+        .then(response => {
+          this.editTask = false
+          this.$emit('update-tasks')
+        })
     },
     deleteTask () {
-      this.$emit('delete-task', this.task)
+      let myInit = {
+        method: 'POST'
+      }
+
+      fetch('http://localhost:3000/tasks/delete/' + this.task.id, myInit)
+        .then(response => {
+          this.$emit('update-tasks')
+        })
+    },
+    updateOptions () {
+      this.$emit('update-tasks')
     }
   }
 }
@@ -70,5 +110,9 @@ export default{
   }
   .taskItem #delete {
     color: red;
+  }
+  .taskItem #dueDate {
+    color: grey;
+    float: right;
   }
 </style>

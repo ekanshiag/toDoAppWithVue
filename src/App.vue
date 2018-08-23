@@ -7,9 +7,8 @@
     :task="task"
     :key="allTasks.indexOf(task)"
 
-    v-if="task.category === 'open'"
-    @update-storage="updateStorage"
-    @delete-task="deleteTask"
+    v-if="task.category === 'Open'"
+    @update-tasks="updateTasks"
     />
     <div class="newTaskItem">
       <input type="text" placeholder="+    New Task" @keyup.enter="addTask" id="newTask">
@@ -21,8 +20,8 @@
     :task="task"
     :key="allTasks.indexOf(task)"
 
-    v-if="task.category === 'closed'"
-    @delete-task="deleteTask"
+    v-if="task.category === 'Closed'"
+    @update-tasks="updateTasks"
     />
   </div>
 </template>
@@ -31,14 +30,19 @@
 import OpenTasks from './components/OpenTasks'
 import ClosedTasks from './components/ClosedTasks'
 
-var allTasks = []
-if (localStorage.getItem('tasks') !== null) {
-  allTasks = JSON.parse(localStorage.getItem('tasks'))
-}
+let allTasks = []
 
 export default {
   name: 'App',
   data () {
+    fetch('http://localhost:3000/tasks/')
+      .then(response => {
+        return response.json()
+      })
+      .then(tasks => {
+        console.log(tasks)
+        this.allTasks = tasks
+      })
     return {
       allTasks
     }
@@ -54,16 +58,37 @@ export default {
         alert('Invalid task')
         return
       }
-      this.allTasks.unshift({'desc': newTask, 'category': 'open'})
-      this.updateStorage()
-      event.target.value = ''
+
+      let data = {
+        'category': 'Open',
+        'desc': newTask,
+        'notes': '',
+        'dueDate': '',
+        'priority': ''
+      }
+
+      let myInit = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }
+
+      fetch('http://localhost:3000/tasks/', myInit)
+        .then(response => {
+          event.target.value = ''
+          this.updateTasks()
+        })
     },
-    updateStorage () {
-      localStorage.setItem('tasks', JSON.stringify(this.allTasks))
-    },
-    deleteTask (taskToRemove) {
-      this.allTasks = this.allTasks.filter(x => { return x !== taskToRemove })
-      this.updateStorage()
+    updateTasks () {
+      fetch('http://localhost:3000/tasks/')
+        .then(response => {
+          return response.json()
+        })
+        .then(tasks => {
+          this.allTasks = tasks
+        })
     }
   }
 }

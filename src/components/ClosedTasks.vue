@@ -2,8 +2,8 @@
   <div class="done">
     <input type="checkbox" id="taskItem" :value='task.desc' @click="updateTaskCategory" checked>
     <label id="taskDesc" for="taskItem">{{task.desc}}</label>
-    <button @click='showOptions = !showOptions'>^</button>
     <button id="delete" @click="deleteTask">X</button>
+    <button @click='showOptions = !showOptions'>^</button>
     <options
     :notes='task.notes'
     :dueDate='task.dueDate'
@@ -31,11 +31,30 @@ export default{
   },
   methods: {
     updateTaskCategory () {
-      this.task.category = 'open'
-      this.$emit('update-storage')
+      let data = {
+        'category': 'Open'
+      }
+      let myInit = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }
+
+      fetch('http://localhost:3000/tasks/patch/' + this.task.id, myInit)
+        .then(response => {
+          this.$emit('update-tasks')
+        })
     },
     deleteTask () {
-      this.$emit('delete-task', this.task)
+      let myInit = {
+        method: 'POST'
+      }
+      fetch('http://localhost:3000/tasks/delete/' + this.task.id, myInit)
+        .then(response => {
+          this.$emit('update-tasks')
+        })
     }
   }
 }
